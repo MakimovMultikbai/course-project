@@ -1,7 +1,7 @@
 package com.example.qwerty.presentation.account.Registration
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,11 +9,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,18 +21,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.qwerty.R
 import com.example.qwerty.presentation.common.CustomTF
-import com.example.qwerty.presentation.navigation.NavRoutes
-import com.example.qwerty.presentation.ui.theme.Cyan
 
+import com.example.qwerty.presentation.common.PasswordTF
+import com.example.qwerty.presentation.navigation.NavRoutes
+import com.example.qwerty.presentation.ui.theme.BaseTextColor
+import com.example.qwerty.presentation.ui.theme.DescriptionTextColor
+import com.example.qwerty.presentation.ui.theme.HyperColor
 
 @Composable
 fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hiltViewModel()){
@@ -46,20 +46,22 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
             viewModel.reset_error()
         }
     }
-    LaunchedEffect(key1 = state.isComplete){
-        if (state.isComplete){
+    /*LaunchedEffect(key1 = state.isLoading) {
+        if (state.isLoading){Toast.makeText(context, "Началась загрузка", Toast.LENGTH_SHORT).show()}
+        else if (!state.isLoading) {Toast.makeText(context, "Пароль не соответствует требованиям", Toast.LENGTH_SHORT).show()}
+    }*/
+
+    LaunchedEffect(key1 = state.isComplete, key2 = state.passIsValid){
+        if (state.isComplete and state.passIsValid){
             navController.navigate(NavRoutes.MainNav.route)
         }
     }
 
 
-    Box() {
-        Image(
-            painter = painterResource(id = R.drawable.signup),
-            contentDescription = "",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+    Box(
+        modifier = Modifier
+            .background(Color.White)
+    ) {
 
         Column(
             modifier = Modifier
@@ -69,7 +71,7 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Регистрация", style = MaterialTheme.typography.headlineLarge)
+            Text(text = "Регистрация", style = MaterialTheme.typography.headlineLarge, color = BaseTextColor)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -97,23 +99,26 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            CustomTF(
+            PasswordTF(
                 value = state.password,
                 onValueChange = { viewModel.change_password(it) },
                 hilt = "Пароль",
-                true
+                status = state.passIsValid
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = {
-                          viewModel.sign_up()
+                    viewModel.sign_up()
                 },
-                enabled = !state.isLoading,
+                enabled = if(!state.isLoading and state.passIsValid) true else false,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp)
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color(0xFFFFFFFF),
+                    containerColor = HyperColor)
             ) {
                 if (state.isLoading){
                     CircularProgressIndicator()
@@ -123,10 +128,11 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
             Spacer(modifier = Modifier.height(8.dp))
 
             Row {
-                Text(text = "Уже зарегестрированы? ")
+                Text(text = "Уже зарегестрированы? ",
+                    color = DescriptionTextColor)
                 Text(
                     text = "LogIn",
-                    color = Cyan,
+                    color = HyperColor,
                     modifier = Modifier.clickable {
                         navController.navigate(NavRoutes.LogInNav.route){
                             navController.graph.startDestinationRoute?.let { route ->
@@ -143,3 +149,4 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
         }
     }
 }
+

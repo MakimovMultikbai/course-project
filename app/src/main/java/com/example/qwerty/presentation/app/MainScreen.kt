@@ -15,6 +15,6 @@ fun MainScreen(navController: NavController){
         .fillMaxSize(),
         contentAlignment = Alignment.Center)
         {
-        Text(text = "Заебись", fontSize = 110.sp)
+        Text(text = "Начальный экран приложения", fontSize = 80.sp)
     }
 }

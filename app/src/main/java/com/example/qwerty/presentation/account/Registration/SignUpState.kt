@@ -8,4 +8,13 @@ data class SignUpState(
     val isLoading: Boolean = false,
     val error: String = "",
     val isComplete: Boolean = false,
+
+    val minLenght: Boolean = false,
+    val specialChar: Boolean = false,
+    val capitalizedChar: Boolean = false,
+    val lowercaseСhar: Boolean = false,
+    val hasNumber: Boolean = false,
+
+    val passIsValid: Boolean = false,
+
 )
