@@ -46,11 +46,6 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
             viewModel.reset_error()
         }
     }
-    /*LaunchedEffect(key1 = state.isLoading) {
-        if (state.isLoading){Toast.makeText(context, "Началась загрузка", Toast.LENGTH_SHORT).show()}
-        else if (!state.isLoading) {Toast.makeText(context, "Пароль не соответствует требованиям", Toast.LENGTH_SHORT).show()}
-    }*/
-
     LaunchedEffect(key1 = state.isComplete, key2 = state.passIsValid){
         if (state.isComplete and state.passIsValid){
             navController.navigate(NavRoutes.MainNav.route)
@@ -86,7 +81,7 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
             CustomTF(
                 value = state.phoneNumber,
                 onValueChange = { viewModel.change_phoneNumber(it) },
-                hilt = "Номер телефона"
+                hilt = "Номер телефона (10 цифр без кода)"
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -94,7 +89,7 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
             CustomTF(
                 value = state.email,
                 onValueChange = { viewModel.change_email(it) },
-                hilt = "Электронная почта"
+                hilt = "Электронная почта",
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -112,7 +107,7 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
                 onClick = {
                     viewModel.sign_up()
                 },
-                enabled = if(!state.isLoading and state.passIsValid) true else false,
+                enabled = if(!state.isLoading and state.passIsValid and state.emailIsValid) true else false,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
@@ -123,6 +118,8 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
                 if (state.isLoading){
                     CircularProgressIndicator()
                 }
+                else if (!state.emailIsValid) Text(text = "Email не соответствует требованиям")
+                else if (!state.passIsValid) Text(text = "Пароль не соответствует требованиям")
                 else {Text(text = "Зарегистрироваться")}
             }
             Spacer(modifier = Modifier.height(8.dp))

@@ -21,6 +21,4 @@ fun NavGraphBuilder.authGraph(
             LogInScreen(navController)
         }
     }
-
-
 }

@@ -22,8 +22,8 @@ object AppModule {
     @Singleton
     fun GetAuthApi(): AuthApi{
           val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.0.163:8000")               /*Общежитие*/
             //.baseUrl("http://192.168.43.15:8000")             /*Радик*/
+            .baseUrl("http://192.168.0.163:8000")               /*Общежитие*/
 
             .addConverterFactory(GsonConverterFactory.create()).build();
 

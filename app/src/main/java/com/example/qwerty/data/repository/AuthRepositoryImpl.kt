@@ -1,14 +1,14 @@
 package com.example.qwerty.data.repository
 
 import android.util.Log
-import androidx.compose.ui.res.stringArrayResource
 import com.example.qwerty.data.data_source.TokensStorage
-import com.example.qwerty.data.remote.dto.LoginRequest
-import com.example.qwerty.data.remote.dto.RegistrationRequest
+import com.example.qwerty.di.dto.LoginRequest
+import com.example.qwerty.di.dto.RegistrationRequest
 import com.example.qwerty.data.remote.AuthApi
-import com.example.qwerty.domain.models.TokenResponse
+import com.example.qwerty.domain.models.UserData
 import com.example.qwerty.domain.repository.AuthRepository
 import org.json.JSONObject
+import retrofit2.Response
 
 class AuthRepositoryImpl (val api: AuthApi, val localStorage: TokensStorage) : AuthRepository {
     override suspend fun reg(
@@ -17,7 +17,14 @@ class AuthRepositoryImpl (val api: AuthApi, val localStorage: TokensStorage) : A
         email: String,
         password: String
     ): String? {
-        val response =  api.reg(RegistrationRequest(userName = name, phoneNumber = number, email = email,password = password))
+        val response =  api.reg(
+            RegistrationRequest(
+            userName = name,
+            phoneNumber = number,
+            email = email,
+            password = password)
+        )
+
         if (response.isSuccessful){
             localStorage.saveToken(response?.body()?.token)
             localStorage.saveRefToken(response?.body()?.refreshToken)
@@ -40,7 +47,9 @@ class AuthRepositoryImpl (val api: AuthApi, val localStorage: TokensStorage) : A
         }
 
 
-    override suspend fun logIn(email: String, password: String): String? {
+    override suspend fun logIn(
+        email: String,
+        password: String): String? {
         val response =  api.login(LoginRequest(email = email,password = password))
         if (response.isSuccessful){
             localStorage.saveToken(response?.body()?.token)
@@ -51,5 +60,10 @@ class AuthRepositoryImpl (val api: AuthApi, val localStorage: TokensStorage) : A
             val answer = JSONObject(response.errorBody()?.string())
             return answer.getString("detail")
         }
+    }
+
+    override suspend fun getUserData(): Response<UserData> {
+        val response = api.getCurrentUser()
+        return response
     }
 }

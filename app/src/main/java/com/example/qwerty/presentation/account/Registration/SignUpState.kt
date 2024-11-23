@@ -9,12 +9,13 @@ data class SignUpState(
     val error: String = "",
     val isComplete: Boolean = false,
 
-    val minLenght: Boolean = false,
+    /*val minLenght: Boolean = false,
     val specialChar: Boolean = false,
     val capitalizedChar: Boolean = false,
     val lowercaseСhar: Boolean = false,
-    val hasNumber: Boolean = false,
+    val hasNumber: Boolean = false,*/
 
     val passIsValid: Boolean = false,
-
+    val phoneNumberIsValid: Boolean = false,
+    val emailIsValid:Boolean = false,
 )

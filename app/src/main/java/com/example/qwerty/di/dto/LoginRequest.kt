@@ -1,4 +1,4 @@
-package com.example.qwerty.data.remote.dto
+package com.example.qwerty.di.dto
 
 data class LoginRequest(
    val email: String,

@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.qwerty.presentation.app.MainScreen
+import com.example.qwerty.domain.repository.app.MainScreen
 
 
 fun NavGraphBuilder.appGraph(
