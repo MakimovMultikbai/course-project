@@ -26,8 +26,8 @@ class AuthRepositoryImpl (val api: AuthApi, val localStorage: TokensStorage) : A
         )
 
         if (response.isSuccessful){
-            localStorage.saveToken(response?.body()?.token)
-            localStorage.saveRefToken(response?.body()?.refreshToken)
+            localStorage.saveToken(response.body()?.token)
+            localStorage.saveRefToken(response.body()?.refreshToken)
             return null
         }
         else {

@@ -58,12 +58,12 @@ class SignUpViewModel @Inject constructor(private val authRepository: AuthReposi
                 validate_minLenght(password) and
                 validate_specialChar(password) and
                 validate_capitalizedChar(password) and
-                validate_lowercaseСhar(password) and
+                validate_lowercaseChar(password) and
                 validate_number(password)
     private fun validate_email(email: String): Boolean = email.matches(Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))
     private fun validate_minLenght(string: String): Boolean = string.matches((Regex(".{8,}")))
     private fun validate_specialChar(password: String): Boolean = password.contains(Regex(pattern = "[!?*.+\\-\$#@]"))
     private fun validate_capitalizedChar(password: String): Boolean = password.matches(Regex(".*[A-Z].*"))
-    private fun validate_lowercaseСhar(password: String): Boolean = password.matches(Regex(".*[a-z].*"))
+    private fun validate_lowercaseChar(password: String): Boolean = password.matches(Regex(".*[a-z].*"))
     private fun validate_number(password: String): Boolean = password.matches(Regex(".*[0-9].*"))
 }

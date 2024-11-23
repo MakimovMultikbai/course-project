@@ -1,6 +1,6 @@
 package com.example.qwerty.domain.repository
 
-import com.example.qwerty.domain.models.TokenResponse
+
 import com.example.qwerty.domain.models.UserData
 import retrofit2.Response
 
