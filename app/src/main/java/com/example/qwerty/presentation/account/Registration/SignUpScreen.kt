@@ -46,9 +46,9 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
             viewModel.reset_error()
         }
     }
-    LaunchedEffect(key1 = state.isComplete, key2 = state.passIsValid){
-        if (state.isComplete and state.passIsValid){
-            navController.navigate(NavRoutes.MainNav.route)
+    LaunchedEffect(key1 = state.isComplete){
+        if (state.isComplete){
+            navController.navigate(NavRoutes.LogInNav.route)
         }
     }
 

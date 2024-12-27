@@ -1,4 +1,4 @@
-package com.example.qwerty.di.dto
+package com.example.qwerty.data.data_source.dto
 
 data class RegistrationRequest(
    val userName: String,

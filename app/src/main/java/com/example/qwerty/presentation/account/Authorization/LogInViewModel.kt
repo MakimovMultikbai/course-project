@@ -4,14 +4,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.qwerty.domain.repository.AuthRepository
-import com.example.qwerty.presentation.account.Registration.SignUpState
+import com.example.qwerty.domain.repository.ApplicationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LogInViewModel @Inject constructor(private val authRepository: AuthRepository): ViewModel(){
+class LogInViewModel @Inject constructor(private val applicationRepository: ApplicationRepository): ViewModel(){
     private val _state = mutableStateOf(LogInState())
     val state : State<LogInState> = _state
 
@@ -27,7 +26,7 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
         viewModelScope.launch {
             try {
                 _state.value = state.value.copy(isLoading = true)
-                authRepository.logIn(state.value.email, state.value.password)
+                applicationRepository.logIn(state.value.email, state.value.password)
                 _state.value = state.value.copy(isComplete = true)
             }
             catch (e: Exception){

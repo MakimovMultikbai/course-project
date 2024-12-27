@@ -1,17 +1,19 @@
 package com.example.qwerty.presentation.account.Registration
 
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.qwerty.domain.repository.AuthRepository
+import com.example.qwerty.domain.repository.ApplicationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val authRepository: AuthRepository) : ViewModel (){
+class SignUpViewModel @Inject constructor(private val applicationRepository: ApplicationRepository) : ViewModel (){
     private val _state = mutableStateOf(SignUpState())
     val state : State<SignUpState> = _state
 
@@ -37,16 +39,15 @@ class SignUpViewModel @Inject constructor(private val authRepository: AuthReposi
         _state.value = state.value.copy(passIsValid = validate_password(pass))
     }
     fun sign_up () {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 _state.value = state.value.copy(isLoading = true)
-                    val error = authRepository.reg(state.value.username, state.value.phoneNumber, state.value.email, state.value.password)
-                    if (error.isNullOrEmpty()) {
-                        _state.value = state.value.copy(isComplete = true)
-                    }
-                    else _state.value = state.value.copy(error = error,isLoading = false)
+                applicationRepository.reg(state.value.username, state.value.phoneNumber, state.value.email, state.value.password)
+                applicationRepository.confirmationEmail(state.value.email)
+                _state.value = state.value.copy(isComplete = true)
             }
             catch (e: Exception){
+                Log.i("login", e.message.toString())
                 _state.value = state.value.copy(error = e.message.toString(),isLoading = false)
             }
         }
