@@ -112,7 +112,7 @@ fun PasswordTF (value: String, onValueChange: (String) -> Unit, hilt: String, st
 
 
 @Composable
-fun CustomTF (value: String, onValueChange: (String) -> Unit, hilt: String, isPassword: Boolean = false) {
+fun CustomTF (value: String, onValueChange: (String) -> Unit, hilt: String, isPassword: Boolean = false, modifier: Modifier = Modifier) {
     var showPass  by remember {mutableStateOf(false)}
     BasicTextField(
         visualTransformation =

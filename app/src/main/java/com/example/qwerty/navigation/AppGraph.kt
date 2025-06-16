@@ -1,4 +1,4 @@
-package com.example.qwerty.presentation.navigation
+package com.example.qwerty.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -16,6 +16,4 @@ fun NavGraphBuilder.appGraph(
             MainScreen(navController)
         }
     }
-
-
 }

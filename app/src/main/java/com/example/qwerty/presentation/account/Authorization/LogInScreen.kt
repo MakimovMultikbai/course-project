@@ -22,18 +22,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.qwerty.navigation.NavRoutes
 import com.example.qwerty.presentation.common.CustomTF
-import com.example.qwerty.presentation.common.PasswordTF
-import com.example.qwerty.presentation.navigation.NavRoutes
 import com.example.qwerty.presentation.ui.theme.DescriptionTextColor
 import com.example.qwerty.presentation.ui.theme.HyperColor
 
 
 @Composable
-fun LogInScreen (navController: NavController, viewModel: LogInViewModel = hiltViewModel()){
+fun LogInScreen (navController: NavController, viewModel: LogInViewModel = hiltViewModel(),preFilledEmail: String? = null){
     val state = viewModel.state.value
     val context = LocalContext.current
 
@@ -61,14 +61,17 @@ fun LogInScreen (navController: NavController, viewModel: LogInViewModel = hiltV
             Spacer(modifier = Modifier.height(16.dp))
 
             CustomTF(
-                value = state.email,
+                modifier = Modifier.testTag("email_field"),
+                value = state.login,
                 onValueChange = { viewModel.change_email(it) },
                 hilt = "Электронная почта"
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            CustomTF(value = state.password,
+            CustomTF(
+                modifier = Modifier.testTag("password_field"),
+                value = state.password,
                 onValueChange = {viewModel.change_password(it)},
                 hilt = "Пароль",
                 isPassword = true
@@ -77,12 +80,14 @@ fun LogInScreen (navController: NavController, viewModel: LogInViewModel = hiltV
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
+
                 onClick = {
                     viewModel.log_in()
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp),
+                    .height(50.dp)
+                    .testTag("login_button"),
                 colors = ButtonDefaults.buttonColors(
                     contentColor = Color(0xFFFFFFFF),
                     containerColor = HyperColor
@@ -94,11 +99,12 @@ fun LogInScreen (navController: NavController, viewModel: LogInViewModel = hiltV
             Spacer(modifier = Modifier.height(8.dp))
 
             Row {
-                Text(text = "Ещё не зарегестрированы? ", color = DescriptionTextColor)
+                Text(text = "Ещё не зарегистрированы? ", color = DescriptionTextColor)
                 Text(
+
                     text = "SignUp",
                     color = HyperColor,
-                    modifier = Modifier.clickable {
+                    modifier = Modifier.testTag("signup_link").clickable {
                         navController.navigate(NavRoutes.SignUpNav.route){
                             navController.graph.startDestinationRoute?.let { route ->
                                 popUpTo(route) {

@@ -1,4 +1,4 @@
-package com.example.qwerty.data.data_source
+package com.example.qwerty.domain.models.data_source
 
 import android.content.Context
 

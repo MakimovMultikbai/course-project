@@ -17,13 +17,19 @@ class SignUpViewModel @Inject constructor(private val applicationRepository: App
     private val _state = mutableStateOf(SignUpState())
     val state : State<SignUpState> = _state
 
-    fun change_username (name:String){
-        _state.value = state.value.copy(username = name)
+    fun change_firstname (name:String){
+        _state.value = state.value.copy(firstname = name)
+    }
+
+    fun change_lastname (name:String){
+        _state.value = state.value.copy(lastname = name)
+    }
+
+    fun change_patronymic (name:String){
+        _state.value = state.value.copy(patronymic = name)
     }
     fun change_phoneNumber (number:String){
-        if (number.length <= 10 &&
-            !number.matches(Regex(".*[^0-9].*")) ||
-            number.isEmpty()
+        if (number.length <= 10 && !number.matches(Regex(".*[^0-9].*")) || number.isEmpty()
             ) {
                 _state.value = state.value.copy(phoneNumber = number)
         }
@@ -42,7 +48,7 @@ class SignUpViewModel @Inject constructor(private val applicationRepository: App
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _state.value = state.value.copy(isLoading = true)
-                applicationRepository.reg(state.value.username, state.value.phoneNumber, state.value.email, state.value.password)
+                applicationRepository.reg(state.value.firstname, state.value.lastname, state.value.patronymic, state.value.phoneNumber, state.value.email, state.value.password)
                 applicationRepository.confirmationEmail(state.value.email)
                 _state.value = state.value.copy(isComplete = true)
             }

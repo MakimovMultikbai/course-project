@@ -1,4 +1,4 @@
-package com.example.qwerty.presentation.navigation
+package com.example.qwerty.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

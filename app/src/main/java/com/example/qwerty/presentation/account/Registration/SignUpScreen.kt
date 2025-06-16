@@ -26,10 +26,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.qwerty.navigation.NavRoutes
 import com.example.qwerty.presentation.common.CustomTF
-
 import com.example.qwerty.presentation.common.PasswordTF
-import com.example.qwerty.presentation.navigation.NavRoutes
 import com.example.qwerty.presentation.ui.theme.BaseTextColor
 import com.example.qwerty.presentation.ui.theme.DescriptionTextColor
 import com.example.qwerty.presentation.ui.theme.HyperColor
@@ -71,9 +70,25 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
             Spacer(modifier = Modifier.height(16.dp))
 
             CustomTF(
-                value = state.username,
-                onValueChange = { viewModel.change_username(it) },
-                hilt = "Имя пользователя"
+                value = state.lastname,
+                onValueChange = { viewModel.change_lastname(it) },
+                hilt = "Фамилия"
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            CustomTF(
+                value = state.firstname,
+                onValueChange = { viewModel.change_firstname(it) },
+                hilt = "Имя"
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            CustomTF(
+                value = state.patronymic,
+                onValueChange = { viewModel.change_patronymic(it) },
+                hilt = "Отчество"
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -125,7 +140,7 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
             Spacer(modifier = Modifier.height(8.dp))
 
             Row {
-                Text(text = "Уже зарегестрированы? ",
+                Text(text = "Уже зарегистрированы? ",
                     color = DescriptionTextColor)
                 Text(
                     text = "LogIn",

@@ -14,8 +14,8 @@ class LogInViewModel @Inject constructor(private val applicationRepository: Appl
     private val _state = mutableStateOf(LogInState())
     val state : State<LogInState> = _state
 
-    fun change_email (email:String) {
-        _state.value = state.value.copy(email = email)
+    fun change_email (login:String) {
+        _state.value = state.value.copy(login = login)
     }
 
     fun change_password (pass:String) {
@@ -26,7 +26,7 @@ class LogInViewModel @Inject constructor(private val applicationRepository: Appl
         viewModelScope.launch {
             try {
                 _state.value = state.value.copy(isLoading = true)
-                applicationRepository.logIn(state.value.email, state.value.password)
+                applicationRepository.logIn(state.value.login, state.value.password)
                 _state.value = state.value.copy(isComplete = true)
             }
             catch (e: Exception){
