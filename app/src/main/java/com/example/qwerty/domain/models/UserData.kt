@@ -6,11 +6,20 @@ data class UserData(
     @SerializedName("id")
     val id: String = "",
 
-    @SerializedName("name")
-    val name: String = "",
+    @SerializedName("userName")
+    val userName: String = "",
+
+    @SerializedName("firstName")
+    val firstName: String = "",
+
+    @SerializedName("lastName")
+    val lastName: String = "",
+
+    @SerializedName("patronymic")
+    val patronymic: String = "",
 
     @SerializedName("dayOfBirth")
-    private val dayOfBirthString: String? = null,
+    val dayOfBirth: BirthdayData? = null,
 
     @SerializedName("phoneNumber")
     val phoneNumber: String = "",
@@ -27,43 +36,22 @@ data class UserData(
     @SerializedName("cards")
     val cards: List<Card> = emptyList()
 ) {
-    val dayOfBirth: DayOfBirth?
-        get() = parseDayOfBirth(dayOfBirthString)
-
-    data class DayOfBirth(
-        val year: Int = 0,
-        val month: Int = 0,
-        val day: Int = 0
-    )
-    data class Card(
-        @SerializedName("id")
-        val id: String = "",
-
-        @SerializedName("status")
-        val status: String = "",
-
-        @SerializedName("number")
-        val number: String = "",
-
-        @SerializedName("balance")
-        val balance: Int = 0
-    )
-    private fun parseDayOfBirth(dateStr: String?): DayOfBirth? {
-        if (dateStr.isNullOrEmpty()) return null
-
-        return try {
-            val parts = dateStr.split("-")
-            if (parts.size == 3) {
-                DayOfBirth(
-                    year = parts[0].toIntOrNull() ?: 0,
-                    month = parts[1].toIntOrNull() ?: 0,
-                    day = parts[2].toIntOrNull() ?: 0
-                )
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            null
-        }
-    }
+//    private fun parseDayOfBirth(dateStr: String?): DayOfBirth? {
+//        if (dateStr.isNullOrEmpty()) return null
+//
+//        return try {
+//            val parts = dateStr.split("-")
+//            if (parts.size == 3) {
+//                BirthdayData(
+//                    year = parts[0].toIntOrNull() ?: 0,
+//                    month = parts[1].toIntOrNull() ?: 0,
+//                    day = parts[2].toIntOrNull() ?: 0
+//                )
+//            } else {
+//                null
+//            }
+//        } catch (e: Exception) {
+//            null
+//        }
+//    }
 }

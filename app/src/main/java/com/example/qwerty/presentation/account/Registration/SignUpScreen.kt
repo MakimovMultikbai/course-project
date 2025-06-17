@@ -47,7 +47,11 @@ fun SignUpScreen (navController: NavController,viewModel: SignUpViewModel = hilt
     }
     LaunchedEffect(key1 = state.isComplete){
         if (state.isComplete){
-            navController.navigate(NavRoutes.LogInNav.route)
+            navController.navigate(NavRoutes.LogInNav.route){
+                popUpTo(NavRoutes.AuthGraph.route) {
+                    inclusive = true
+                }
+            }
         }
     }
 

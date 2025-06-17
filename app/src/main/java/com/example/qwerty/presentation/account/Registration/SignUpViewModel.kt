@@ -49,7 +49,7 @@ class SignUpViewModel @Inject constructor(private val applicationRepository: App
             try {
                 _state.value = state.value.copy(isLoading = true)
                 applicationRepository.reg(state.value.firstname, state.value.lastname, state.value.patronymic, state.value.phoneNumber, state.value.email, state.value.password)
-                applicationRepository.confirmationEmail(state.value.email)
+//                applicationRepository.confirmationEmail(state.value.email)
                 _state.value = state.value.copy(isComplete = true)
             }
             catch (e: Exception){

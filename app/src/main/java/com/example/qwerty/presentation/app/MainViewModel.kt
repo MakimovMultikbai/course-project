@@ -1,10 +1,12 @@
 package com.example.qwerty.presentation.app
 
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.qwerty.domain.models.UserData
+import com.example.qwerty.domain.models.data_source.TokensStorage
 import com.example.qwerty.domain.repository.ApplicationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -35,6 +37,17 @@ class MainViewModel @Inject constructor(
                     error = e.message ?: "Ошибка загрузки данных"
                 )
             }
+        }
+    }
+
+    fun exit(context: Context) {
+        try {
+            TokensStorage(context).saveToken(null)
+        }catch (e: Exception){
+            _state.value = _state.value.copy(
+                isLoading = false,
+                error = e.message ?: "Ошибка выхода"
+            )
         }
     }
 }

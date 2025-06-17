@@ -8,4 +8,7 @@ sealed class NavRoutes(val route: String) {
     }
     object AppGraph : NavRoutes("AppGraph")
     object MainNav : NavRoutes("Main")
+
+    object CardDetails : NavRoutes("CardDetails")
+    object AddCard : NavRoutes("AddCard")
 }

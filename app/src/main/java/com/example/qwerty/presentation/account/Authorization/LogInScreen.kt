@@ -44,7 +44,11 @@ fun LogInScreen (navController: NavController, viewModel: LogInViewModel = hiltV
     }
     LaunchedEffect(key1 = state.isComplete){
         if (state.isComplete){
-            navController.navigate(NavRoutes.MainNav.route)
+            navController.navigate(NavRoutes.MainNav.route){
+                popUpTo(NavRoutes.AuthGraph.route) {
+                    inclusive = true
+                }
+            }
         }
     }
 
